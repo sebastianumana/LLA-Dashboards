@@ -49,7 +49,8 @@ when first_sales_chnl_bom is not null then first_sales_chnl_bom
 when first_sales_chnl_bom is null then first_sales_chnl_eom 
 end as Sales_Channel, 
 sum(e_numrgus_adj - b_numrgus_adj) as Rgus,  count(distinct a.fixedaccount) as Num_Users,
-round(avg(cast(avg_mrc_month as double)),0) as Avg_mrc_month
+round(avg(cast(avg_mrc_month as double)),0) as Avg_mrc_month,
+Round((sum(e_numrgus_adj - b_numrgus_adj)/count(distinct a.fixedaccount)),2) as AVG_RGUs_User
 from "lla_cco_int_ana_prod"."cwp_fmc_churn_prod" a 
 left join avg_mrc b on a.fixedaccount = b.fixedaccount 
 left join ovalusers c on a.fixedaccount = c.fixedaccount

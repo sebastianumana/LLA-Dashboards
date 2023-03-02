@@ -1,0 +1,30 @@
+-- SELECT count (distinct(billableaccountno)) from "db-stage-dev"."polaris_campaigns" where dias_de_atraso < 90 
+with 
+
+polaris_analysis as (
+SELECT  date(dt) as dt,
+        billableaccountno as cuenta,
+        dias_de_atraso as overdue,
+        sum (if(dias_de_atraso >=90,1,0)) as involuntary_candidate
+from "db-stage-dev"."polaris_campaigns"
+where date(dt) between date('2022-11-30') and date('2022-12-31')
+    and billableaccountno in (SELECT distinct billableaccountno 
+                                from "db-stage-dev"."polaris_campaigns" 
+                                where dias_de_atraso < 90 
+                                    and date(dt) = date('2022-11-30'))
+                        
+group by 1,2,3
+order by 1)
+
+,involuntary_users_base as (
+SELECT distinct cast (cuenta as varchar) as involuntary_users
+--involuntary_candidate
+from polaris_analysis where involuntary_candidate = 1)
+
+
+select 
+mobilechurnertype,
+count (distinct mobile_account)
+from "lla_cco_int_ana_dev"."cwp_fmc_churn_dev" 
+where mobile_account in (select distinct involuntary_users from involuntary_users_base) and month = date('2022-12-01') and month = date(dt)
+group by 1

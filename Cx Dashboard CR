@@ -367,10 +367,10 @@ select distinct month,Opco,Market,MarketSize,Product,Biz_Unit,'customer_time' as
 select distinct month,Opco,Market,MarketSize,Product,Biz_Unit,'digital_shift' as facet,'support-call' as journey_waypoint,kpi_name,kpi_meas,null as kpi_num,null as kpi_den,null as KPI_Sla,Kpi_delay_display,Network,extract (year from date(Month)) as ref_year, extract(month from date(month)) as ref_mo  from wanda_kpis where kpi_name='Chatbot_Containment_Care')
 
 ,fcrcare as(
-select distinct month,Opco,Market,MarketSize,Product,Biz_Unit,'effectiveness' as facet,'support-call' as journey_waypoint,'FCR_Care' as kpi_name,kpi_meas,null as kpi_num,null as kpi_den,null as KPI_Sla,Kpi_delay_display,Network,extract (year from date(Month)) as ref_year, extract(month from date(month)) as ref_mo  from wanda_kpis where kpi_name='fcr_Care')
+select distinct month,Opco,Market,MarketSize,Product,Biz_Unit,'effectiveness' as facet,'support-call' as journey_waypoint,'FCR_Care' as kpi_name,kpi_meas,null as kpi_num,null as kpi_den,null as KPI_Sla,Kpi_delay_display,Network,extract (year from date(Month)) as ref_year, extract(month from date(month)) as ref_mo  from wanda_kpis where kpi_name='FCR_Care')
 
 ,fcrtech as(
-select distinct month,Opco,Market,MarketSize,Product,Biz_Unit,'effectiveness' as facet,'support-call' as journey_waypoint,'FCR_Tech' as kpi_name,kpi_meas,null as kpi_num,null as kpi_den,null as KPI_Sla,Kpi_delay_display,Network,extract (year from date(Month)) as ref_year, extract(month from date(month)) as ref_mo  from wanda_kpis where kpi_name='fcr_Tech')
+select distinct month,Opco,Market,MarketSize,Product,Biz_Unit,'effectiveness' as facet,'support-call' as journey_waypoint,'FCR_Tech' as kpi_name,kpi_meas,null as kpi_num,null as kpi_den,null as KPI_Sla,Kpi_delay_display,Network,extract (year from date(Month)) as ref_year, extract(month from date(month)) as ref_mo  from wanda_kpis where kpi_name='FCR_Tech')
 
 -- ,fcrtech as(
 -- select distinct month,Opco,Market,MarketSize,Product,Biz_Unit,'effectiveness' as facet,'support-call' as journey_waypoint,'FCR_Tech' as kpi_name,kpi_meas,kpi_num,kpi_den,Kpi_delay_display,Network from wanda_kpis where kpi_name='FCR_Tech')
@@ -425,5 +425,4 @@ union all select Month,Opco,Market,MarketSize,Product,Biz_Unit,facet,journey_way
 union all select Month,Opco,Market,MarketSize,Product,Biz_Unit,facet,journey_waypoint,kpi_name,kpi_meas,kpi_num,kpi_den,KPI_Sla,Kpi_delay_display,Network from CareCall1kRGU_Flag
 ))
 
---,Join_Technology as(
 select * from(select * from All_KPIs union all select * from GrossAdds_Network union all select * from ActiveBase_Network1 union all select * from ActiveBase_Network2 union all select * from TechTickets_Network union all select * from MRCChanges_Network union all select * from SalesSoftDx_Network union all select * from EarlyIssues_Network union all select * from LongInstall_Network union all select * from EarlyTickets_Network union all select * from RepeatedCall_Network union all select * from MountingBill_Network )
